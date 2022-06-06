@@ -4,15 +4,25 @@ public class Cell {
 
     private final int y;
 
-    private  int minesAround;
+    private int minesAround;
 
     private boolean Mine;
 
     private boolean playerMark;
 
+    private boolean exploredCell;
+
     public Cell(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public int getMinesAround() {
@@ -37,6 +47,14 @@ public class Cell {
 
     public void setPlayerMark(boolean playerMark) {
         this.playerMark = playerMark;
+    }
+
+    public boolean isExploredCell() {
+        return exploredCell;
+    }
+
+    public void setExploredCell(boolean exploredCell) {
+        this.exploredCell = exploredCell;
     }
 
     @Override
