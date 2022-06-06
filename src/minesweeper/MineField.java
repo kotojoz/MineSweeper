@@ -64,7 +64,7 @@ public class MineField {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
-                System.out.print("Set/unset mine marks or claim a cell as free:");
+                System.out.print("Set/unset mine marks or claim a cell as free: ");
                 int x = scanner.nextInt();
                 int y = scanner.nextInt();
                 String command = scanner.next();
