@@ -1,21 +1,20 @@
 package minesweeper;
 
 import static minesweeper.FieldSigns.*;
+import static minesweeper.Properties.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MineField {
 
-    private static final int FIELD_SIZE = 9;
+//    private static final int FIELD_SIZE = 9;
 
     private boolean steppedOnMine;
 
     private boolean noExploredCell;
 
+    //Need for creating around first player's move empty cells
     private List<Cell> firstEmptyCells;
 
     private final int MINES_ON_THE_FIELD;
@@ -30,8 +29,8 @@ public class MineField {
     }
 
     private void createField() {
-        for (int y = 1; y <= FIELD_SIZE; y++) {
-            for (int x = 1; x <= FIELD_SIZE; x++) {
+        for (int y = 1; y <= FIELD_SIZE.getProperty(); y++) {
+            for (int x = 1; x <= FIELD_SIZE.getProperty(); x++) {
                 field.add(new Cell(x, y));
             }
         }
@@ -64,17 +63,21 @@ public class MineField {
     public void setOrDeletePlayerMark() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.print("Set/delete mines marks (x and y coordinates): ");
-            int x = scanner.nextInt();
-            int y = scanner.nextInt();
-            String command = scanner.next();
-            int cellIndex = field.indexOf(new Cell(x, y));
-            if (command.equals("mine")) {
-                field.get(cellIndex).setPlayerMark(!field.get(cellIndex).isPlayerMark());
-                break;
-            } else if (command.equals("free")) {
-                explore(x, y);
-                break;
+            try {
+                System.out.print("Set/unset mine marks or claim a cell as free:");
+                int x = scanner.nextInt();
+                int y = scanner.nextInt();
+                String command = scanner.next();
+                int cellIndex = field.indexOf(new Cell(x, y));
+                if (command.equals("mine")) {
+                    field.get(cellIndex).setPlayerMark(!field.get(cellIndex).isPlayerMark());
+                    break;
+                } else if (command.equals("free")) {
+                    explore(x, y);
+                    break;
+                }
+            } catch (InputMismatchException ignore) {
+                scanner.nextLine();
             }
         }
     }
@@ -98,8 +101,10 @@ public class MineField {
 
     private void firstMove(Cell firstCell) {
         firstEmptyCells = new ArrayList<>();
-        noExploredCell = false;
         firstCell.setExploredCell(true);
+        noExploredCell = false;
+
+        //Collecting cells around player`s first move
         for (int x = firstCell.getX() - 1; x <= firstCell.getX() + 1; x++) {
             for (int y = firstCell.getY() - 1; y <= firstCell.getY() + 1; y++) {
                 try {
@@ -134,10 +139,13 @@ public class MineField {
     }
 
     private void setNumbersAroundMines() {
-        for (int y = 1; y <= FIELD_SIZE; y++) {
-            for (int x = 1; x <= FIELD_SIZE; x++) {
+        //Loop check all field
+        for (int y = 1; y <= FIELD_SIZE.getProperty(); y++) {
+            for (int x = 1; x <= FIELD_SIZE.getProperty(); x++) {
                 int cellIndex = field.indexOf(new Cell(x, y));
                 if (field.get(cellIndex).isMine()) {
+
+                    //Loop check cells around mine and set numbers
                     for (int i = y - 1; i <= y + 1; i++) {
                         for (int j = x - 1; j <= x + 1; j++) {
                             setNumber(j, i);
@@ -206,7 +214,7 @@ public class MineField {
 
         //Print first line with numbers
         System.out.print(" |");
-        for (int i = 1; i <= FIELD_SIZE; i++) {
+        for (int i = 1; i <= FIELD_SIZE.getProperty(); i++) {
             System.out.print(i);
         }
 
@@ -214,9 +222,9 @@ public class MineField {
         System.out.print("|\n");
         System.out.println("-|---------|");
         int linesNumber = 1;
-        for (int y = 1; y <= FIELD_SIZE; y++) {
+        for (int y = 1; y <= FIELD_SIZE.getProperty(); y++) {
             System.out.print(linesNumber++ + "|");
-            for (int x = 1; x <= FIELD_SIZE; x++) {
+            for (int x = 1; x <= FIELD_SIZE.getProperty(); x++) {
 
                 //Find cell with coordinates x and y and check condition
                 int cellIndex = field.indexOf(new Cell(x, y));
