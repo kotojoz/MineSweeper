@@ -12,6 +12,11 @@ public class Inserts {
 
     private static final String ONLY_DIGITS = "You can use only digits";
 
+    private static final String ONLY_LETTERS = "You can use only letters";
+
+    private static final String WRONG_COORDINATES = "Coordinates must be > 0 and < "
+            + FIELD_SIZE.getProperty();
+
     public static int setMinesCount() {
         Scanner scanner = new Scanner(System.in);
         int minesCount;
@@ -38,8 +43,8 @@ public class Inserts {
                 number = Integer.parseInt(scanner.next());
                 if (number <= FIELD_SIZE.getProperty() && number > 0) {
                     break;
-                }else {
-                    System.out.println("Coordinates must be > 0 and < 9");
+                } else {
+                    System.out.println(WRONG_COORDINATES);
                 }
             } catch (NumberFormatException e) {
                 System.out.println(ONLY_DIGITS);
@@ -60,7 +65,7 @@ public class Inserts {
                 }
                 System.out.println("Coordinates must be > 0 and < 9");
             } catch (InputMismatchException e) {
-                System.out.println("Only letters");
+                System.out.println(ONLY_LETTERS);
                 scanner.nextLine();
             }
         }
