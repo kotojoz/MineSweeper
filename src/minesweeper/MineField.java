@@ -61,23 +61,21 @@ public class MineField {
     }
 
     public void setOrDeletePlayerMark() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
-            try {
-                System.out.print("Set/unset mine marks or claim a cell as free: ");
-                int x = scanner.nextInt();
-                int y = scanner.nextInt();
-                String command = scanner.next();
-                int cellIndex = field.indexOf(new Cell(x, y));
-                if (command.equals("mine")) {
-                    field.get(cellIndex).setPlayerMark(!field.get(cellIndex).isPlayerMark());
-                    break;
-                } else if (command.equals("free")) {
-                    explore(x, y);
-                    break;
-                }
-            } catch (InputMismatchException ignore) {
-                scanner.nextLine();
+            System.out.println("Set/unset mine marks or claim a cell as free:");
+            System.out.print("X: ");
+            int x = Inserts.setCoordinates();
+            System.out.print("Y: ");
+            int y = Inserts.setCoordinates();
+            System.out.print("free or mine ");
+            String command = Inserts.setCommand();
+            int cellIndex = field.indexOf(new Cell(x, y));
+            if (command.equals("mine")) {
+                field.get(cellIndex).setPlayerMark(!field.get(cellIndex).isPlayerMark());
+                break;
+            } else if (command.equals("free")) {
+                explore(x, y);
+                break;
             }
         }
     }
