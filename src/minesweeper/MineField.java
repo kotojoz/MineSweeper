@@ -1,3 +1,7 @@
+package minesweeper;
+
+import static minesweeper.FieldSigns.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -5,14 +9,6 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class MineField {
-
-    private static final char EMPTY_CELL = '.';
-
-    private static final char PLAYER_MARK = '*';
-
-    private static final char EXPLORED_CELL = '/';
-
-    private static final char MINE = 'X';
 
     private static final int FIELD_SIZE = 9;
 
@@ -109,7 +105,7 @@ public class MineField {
                 try {
                     int index = field.indexOf(new Cell(x, y));
                     firstEmptyCells.add(field.get(index));
-                }catch (IndexOutOfBoundsException ignored){
+                } catch (IndexOutOfBoundsException ignored) {
                 }
             }
 

@@ -1,3 +1,5 @@
+package minesweeper;
+
 public class Cell {
 
     private final int x;

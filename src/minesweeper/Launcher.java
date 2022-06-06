@@ -1,3 +1,5 @@
+package minesweeper;
+
 import java.util.Scanner;
 
 public class Launcher {
