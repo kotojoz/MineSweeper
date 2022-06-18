@@ -62,18 +62,15 @@ public class MineField {
 
     public void setOrDeletePlayerMark() {
         while (true) {
-            System.out.println("Set/unset mine marks or claim a cell as free:");
-            System.out.print("X: ");
-            int x = Inserts.setCoordinates();
-            System.out.print("Y: ");
-            int y = Inserts.setCoordinates();
-            System.out.print("free or mine ");
-            String command = Inserts.setCommand();
+            String[] command = Inserts.enterCommand();
+            int x = Integer.parseInt(command[0]);
+            int y = Integer.parseInt(command[1]);
+            String mineOrFree = command[2];
             int cellIndex = field.indexOf(new Cell(x, y));
-            if (command.equals("mine")) {
+            if (mineOrFree.equals("mine")) {
                 field.get(cellIndex).setPlayerMark(!field.get(cellIndex).isPlayerMark());
                 break;
-            } else if (command.equals("free")) {
+            } else if (mineOrFree.equals("free")) {
                 explore(x, y);
                 break;
             }
